@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumATE</title>
+<link rel="icon" type="image/png" href="images/2026-06-27.png">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;500;600;700&family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/builder.css">
+</head>
+<body>
+
+<section id="editorSection">
+  <div class="section-header">
+    <div class="badge">ResumATE</div>
+    <h2 class="section-title">Resume Editor</h2>
+    <p class="section-sub">Fill in your details and watch your resume come alive in real time.</p>
+  </div>
+
+  <div class="editor-wrapper">
+    <div class="editor-panel form-panel">
+      <h3>Your Information</h3>
+      <div class="section-label">Personal Info</div>
+      <div class="form-row"><label>Full Name</label><input type="text" id="f_name" placeholder="Dolly Mishra" oninput="renderPreview()"></div>
+      <div class="form-row"><label>Job Title</label><input type="text" id="f_role" placeholder="Frontend Developer" oninput="renderPreview()"></div>
+      <div class="two-col">
+        <div class="form-row"><label>Email</label><input type="text" id="f_email" placeholder="you@email.com" oninput="renderPreview()"></div>
+        <div class="form-row"><label>Phone</label><input type="text" id="f_phone" placeholder="+91 98765 43210" oninput="renderPreview()"></div>
+      </div>
+      <div class="two-col">
+        <div class="form-row"><label>Location</label><input type="text" id="f_location" placeholder="Mumbai, India" oninput="renderPreview()"></div>
+        <div class="form-row"><label>LinkedIn</label><input type="text" id="f_linkedin" placeholder="linkedin.com/in/you" oninput="renderPreview()"></div>
+      </div>
+      <div class="two-col">
+        <div class="form-row"><label>GitHub</label><input type="text" id="f_github" placeholder="github.com/yourname" oninput="renderPreview()"></div>
+        <div class="form-row"><label>Portfolio / Website</label><input type="text" id="f_link" placeholder="yoursite.com" oninput="renderPreview()"></div>
+      </div>
+      <div class="photo-row" id="photoRow">
+        <label class="photo-label">Profile Photo <span style="color:var(--muted);font-size:9px">(creative &amp; modern only)</span></label>
+        <div class="photo-upload-area" onclick="document.getElementById('f_photo').click()">
+          <img id="photoPreviewThumb" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%">
+          <span id="photoUploadHint">Click to upload photo</span>
+          <input type="file" id="f_photo" accept="image/*" style="display:none" onchange="handlePhoto(event)">
+        </div>
+        <button class="add-btn" id="removePhotoBtn" style="display:none;margin-top:6px" onclick="removePhoto()">Remove Photo</button>
+      </div>
+      <div class="form-row"><label>Summary</label><textarea id="f_summary" placeholder="Brief professional summary..." oninput="renderPreview()"></textarea></div>
+      <div class="section-label">Work Experience <button class="add-btn" onclick="addExp()">+ Add</button></div>
+      <div id="expContainer"></div>
+      <div class="section-label">Projects <button class="add-btn" onclick="addProject()">+ Add</button></div>
+      <div id="projContainer"></div>
+      <div class="section-label">Education <button class="add-btn" onclick="addEdu()">+ Add</button></div>
+      <div id="eduContainer"></div>
+      <div class="section-label">Skills</div>
+      <div class="form-row"><label>Skills (comma separated)</label><input type="text" id="f_skills" placeholder="React, TypeScript, CSS, Vite" oninput="renderPreview()"></div>
+    </div>
+
+    <div class="editor-panel preview-panel">
+      <h3>Live Preview</h3>
+      <div class="preview-area" id="previewArea"></div>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="showDownload()">Download PDF</button>
+        <button class="btn-secondary" onclick="sharelink()">Share Link</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="template-strip-label">Select Template</div>
+  <div class="template-strip" id="templateStrip">
+    <div class="tmpl-card active" onclick="selectTemplate('minimal',this)" data-name="minimal">
+      <div class="tmpl-thumb minimal-thumb">
+        <div class="th-name">JUSTIN SMITH</div>
+        <div class="th-role">Marketing Manager</div>
+        <div class="th-row">
+          <div class="th-col">
+            <div class="th-label" style="color:#2a5f8f">SKILLS</div><div class="th-line"></div>
+            <div class="th-text">Lorem ipsum dolor</div><div class="th-text">Postulant qualiscue</div>
+            <div class="th-label" style="color:#2a5f8f;margin-top:5px">EDUCATION</div><div class="th-line"></div>
+            <div class="th-text bold">Master of Business</div><div class="th-text">San Diego State</div>
+          </div>
+          <div class="th-col">
+            <div class="th-label" style="color:#2a5f8f">EXPERIENCE</div><div class="th-line"></div>
+            <div class="th-text bold">MARKETING COORDINATOR</div><div class="th-text">San Diego Arts Org</div>
+            <div class="th-text muted">January 2011 - Present</div>
+            <div class="th-text">Lorem ipsum dolor sit amet explicari</div>
+          </div>
+        </div>
+      </div>
+      <div class="tmpl-name">minimal</div>
+    </div>
+
+    <div class="tmpl-card" onclick="selectTemplate('creative',this)" data-name="creative">
+      <div class="tmpl-thumb creative-thumb">
+        <div class="cr-sidebar">
+          <div class="cr-avatar"></div>
+          <div class="cr-name">Joseph L. Smith</div><div class="cr-role">Growth marketing aficionado</div>
+          <div class="cr-section">Details</div><div class="cr-detail">San Francisco, US</div><div class="cr-detail">Tel 300-555-6666</div>
+          <div class="cr-section">Tools</div><div class="cr-detail" style="font-weight:600;color:#fff">Google Analytics</div><div class="cr-detail" style="font-weight:600;color:#fff">Facebook Ads</div>
+          <div class="cr-section">Languages</div><div class="cr-detail">English · Native</div>
+        </div>
+        <div class="cr-main">
+          <div class="cr-label">Profile</div><div class="cr-text">Currently working as a Marketing Manager at Netflix building and executing marketing activities.</div>
+          <div class="cr-label">Experience</div><div class="cr-job-title">Marketing Manager - Netflix</div><div class="cr-date">Feb 2017 - currently employed</div>
+          <div class="cr-text">Set up, managed and tracked a marketing plan budget of $250k across all digital channels.</div>
+          <div class="cr-label">Education</div><div class="cr-job-title">MSc Strategic Marketing</div><div class="cr-date">Sep 2010 - Jul 2014</div>
+        </div>
+      </div>
+      <div class="tmpl-name">creative</div>
+    </div>
+
+    <div class="tmpl-card" onclick="selectTemplate('classic',this)" data-name="classic">
+      <div class="tmpl-thumb classic-thumb">
+        <div class="cl-top-bar"></div>
+        <div class="cl-header"><div class="cl-name">Sarah Smith</div><div class="cl-role">Management Professional</div><div class="cl-addr">4759 Sunnydale Lane, Plano, Texas</div><div class="cl-contact-row"><span>123-456-7890</span><span>email@youremail.com</span></div></div>
+        <div class="cl-divider"></div>
+        <div class="cl-summary">Management Professional with 2+ years of experience guiding teams through complex projects.</div>
+        <div class="cl-section-title">Professional Experience</div><div class="cl-divider"></div>
+        <div class="cl-exp-header"><span class="cl-company">Dallas Graphic Design</span><span class="cl-date">March 2021 - Present</span></div>
+        <div class="cl-job">Managerial Associate</div><div class="cl-bullet">Assemble teams of graphic artists and copywriters</div>
+        <div class="cl-section-title">Education</div><div class="cl-divider"></div>
+        <div class="cl-edu">Houston School of Business<br><span style="color:#2a7a6e;font-weight:700">Master of Science</span> | September 2021</div>
+        <div class="cl-section-title">Key Skills</div><div class="cl-divider"></div>
+        <div class="cl-skills-grid">
+          <div><div class="cl-skill-label">Conflict Management</div><div class="cl-bar"><div class="cl-bar-fill" style="width:80%"></div></div></div>
+          <div><div class="cl-skill-label">Project Scheduling</div><div class="cl-bar"><div class="cl-bar-fill" style="width:65%"></div></div></div>
+        </div>
+      </div>
+      <div class="tmpl-name">classic</div>
+    </div>
+
+    <div class="tmpl-card" onclick="selectTemplate('professional',this)" data-name="professional">
+      <div class="tmpl-thumb professional-thumb">
+        <div class="pr-name">AHMDD SAAH</div><div class="pr-role">MARKETING MANAGER</div><div class="pr-divider"></div>
+        <div class="pr-body">
+          <div class="pr-left">
+            <div class="pr-label">CONTACT</div><div class="pr-divider-sm"></div>
+            <div class="pr-info">+124-4236-7894</div><div class="pr-info">hello@ahmedd.com</div><div class="pr-info">123 Any City</div>
+            <div class="pr-label">SKILLS</div><div class="pr-divider-sm"></div>
+            <div class="pr-info">Strategic Planning</div><div class="pr-info">Problem Solving</div><div class="pr-info">Crisis Management</div>
+            <div class="pr-label">LANGUAGES</div><div class="pr-divider-sm"></div><div class="pr-info">English (Fluent)</div>
+          </div>
+          <div class="pr-timeline"></div>
+          <div class="pr-right">
+            <div class="pr-label">PROFILE</div><div class="pr-divider-sm"></div>
+            <div class="pr-text">Neimo ensiont est atem Aham ipsum, finifam imbo sido. Intum lumina parco regia.</div>
+            <div class="pr-label">WORK EXPERIENCE</div><div class="pr-divider-sm"></div>
+            <div class="pr-job"><span class="pr-company">Borcelle Studio</span><span class="pr-date">2030 - PRESENT</span></div>
+            <div class="pr-jobtitle">Marketing Manager</div><div class="pr-text">Formulate and implement detailed marketing strategies.</div>
+            <div class="pr-label">EDUCATION</div><div class="pr-divider-sm"></div>
+            <div class="pr-company">Master of Business Mgmt</div><div class="pr-text">Wardiere University · 2029-2031</div>
+          </div>
+        </div>
+      </div>
+      <div class="tmpl-name">professional</div>
+    </div>
+
+    <div class="tmpl-card" onclick="selectTemplate('modern',this)" data-name="modern">
+      <div class="tmpl-thumb modern-thumb">
+        <div class="mo-header"><div class="mo-name">LAUREN CHEN</div><div class="mo-role">DIGITAL MARKETING SPECIALIST</div></div>
+        <div class="mo-body">
+          <div class="mo-left">
+            <div class="mo-avatar"></div>
+            <div class="mo-section">SUMMARY</div><div class="mo-text">Digital Marketing Specialist with 6+ years of experience in online marketing, branding.</div>
+            <div class="mo-section">EDUCATION</div><div class="mo-text">Bachelor of Arts · Resume Genius University</div>
+            <div class="mo-section">RELEVANT SKILLS</div>
+            <div class="mo-skill"><span>Digital Analytics</span><div class="mo-bar"><div class="mo-fill" style="width:80%"></div></div><span class="mo-pct">80%</span></div>
+            <div class="mo-skill"><span>Photoshop</span><div class="mo-bar"><div class="mo-fill" style="width:70%"></div></div><span class="mo-pct">70%</span></div>
+          </div>
+          <div class="mo-right">
+            <div class="mo-section">CONTACT</div>
+            <div class="mo-info"><span class="mo-key">phone</span> (123) 456-7890</div><div class="mo-info"><span class="mo-key">email</span> lauren@mail.com</div>
+            <div class="mo-section">PROFESSIONAL EXPERIENCE</div>
+            <div class="mo-date">January 20XX - Present</div><div class="mo-jobtitle">Digital Marketing Specialist</div><div class="mo-company">BCG, New York, NY</div>
+            <div class="mo-bullet">Manage digital sales and streaming accounts</div><div class="mo-bullet">Source and develop strategic partnerships</div>
+          </div>
+        </div>
+      </div>
+      <div class="tmpl-name">modern</div>
+    </div>
+  </div>
+</section>
+
+<div class="download-overlay" id="downloadOverlay" style="display:none">
+  <div class="download-text" id="downloadText">Preparing your resume...</div>
+</div>
+
+<script src="js/builder.js"></script>
+</body>
+</html>

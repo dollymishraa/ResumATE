@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <button class="btn btn-secondary logout-btn" onclick="window.location.href='dashboard.html'">← Back</button>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header slide-up">
+      <h1 class="dashboard-title">Profile</h1>
+      <p class="dashboard-subtitle">Manage your account information.</p>
+    </div>
+
+    <div class="glass slide-up delay-100" style="max-width: 600px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+      <div style="display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--surface-color); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; border: 2px solid var(--border-color);" id="avatarInitials"></div>
+        <div>
+          <h2 id="profileName"></h2>
+          <p class="text-muted" id="profileEmail"></p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+        <div>
+          <label class="form-label">Full Name</label>
+          <input type="text" id="editName" placeholder="Your name">
+        </div>
+        <div>
+          <label class="form-label">Email</label>
+          <input type="email" id="editEmail" placeholder="your@email.com">
+        </div>
+        <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="slide-up delay-200">
+      <h2 style="margin-bottom: var(--spacing-lg);">Statistics</h2>
+      <div class="dashboard-grid">
+        <div class="glass" style="padding: var(--spacing-lg);">
+          <div class="text-muted">Total Resumes</div>
+          <div style="font-size: 2.5rem; font-weight: 700; margin-top: var(--spacing-sm);" id="totalResumes">0</div>
+        </div>
+        <div class="glass" style="padding: var(--spacing-lg);">
+          <div class="text-muted">Member Since</div>
+          <div style="font-size: 1.5rem; font-weight: 600; margin-top: var(--spacing-sm);" id="memberSince"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/resume.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.requireAuth();
+      
+      const user = Auth.getCurrentUser();
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('editName').value = user.name;
+      document.getElementById('editEmail').value = user.email;
+      
+      const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+      document.getElementById('avatarInitials').textContent = initials;
+
+      const resumes = ResumeManager.getAll();
+      document.getElementById('totalResumes').textContent = resumes.length;
+
+      const users = Auth.getUsers();
+      const fullUser = users.find(u => u.id === user.id);
+      if (fullUser) {
+        const date = new Date(fullUser.createdAt);
+        document.getElementById('memberSince').textContent = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      }
+
+      setTimeout(() => {
+        document.querySelectorAll('.slide-up').forEach(el => el.classList.add('visible'));
+      }, 100);
+    });
+
+    function saveProfile() {
+      const newName = document.getElementById('editName').value;
+      const newEmail = document.getElementById('editEmail').value;
+
+      if (!newName || !newEmail) {
+        Toast.show('Please fill in all fields', 'error');
+        return;
+      }
+
+      const user = Auth.getCurrentUser();
+      const users = Auth.getUsers();
+      const userIndex = users.findIndex(u => u.id === user.id);
+      
+      if (userIndex >= 0) {
+        users[userIndex].name = newName;
+        users[userIndex].email = newEmail;
+        Storage.set(Auth.USERS_KEY, users);
+        
+        Auth.setSession({ id: user.id, name: newName, email: newEmail });
+        Toast.show('Profile updated successfully', 'success');
+        
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    }
+  </script>
+</body>
+</html>

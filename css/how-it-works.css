@@ -1,0 +1,175 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#1f1f1f;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* Back Button */
+
+.back-btn{
+    position:fixed;
+    top:35px;
+    left:40px;
+    color:#d7d7d7;
+    text-decoration:none;
+    font-size:15px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    color:#fff;
+}
+
+/* Container */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    padding:120px 0 60px;
+}
+
+/* Badge */
+
+.badge{
+    display:inline-block;
+    padding:8px 18px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:50px;
+    color:#bcbcbc;
+    letter-spacing:2px;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+/* Heading */
+
+h1{
+    font-size:56px;
+    font-weight:600;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+/* Intro */
+
+.intro{
+    max-width:650px;
+    color:#b8b8b8;
+    line-height:1.8;
+    margin-bottom:60px;
+}
+
+/* Grid */
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+}
+
+/* Cards */
+
+.step{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.step:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,.25);
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+}
+
+/* Images */
+
+.step img{
+    width: 100%;
+    height:750px;
+    object-fit:fill;
+}
+
+/* Card Content */
+
+.step .number{
+    font-size:42px;
+    font-weight:700;
+    color:#666;
+    margin:25px 25px 10px;
+}
+
+.step h2{
+    margin:0 25px 15px;
+    font-size:28px;
+    font-weight:600;
+}
+
+.step p{
+    margin:0 25px 30px;
+    color:#b8b8b8;
+    line-height:1.8;
+}
+
+/* Footer */
+
+footer{
+    margin-top:70px;
+    text-align:center;
+    color:#8d8d8d;
+    font-size:14px;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.steps{
+    grid-template-columns:1fr;
+}
+
+h1{
+    font-size:42px;
+}
+
+.step img{
+    height:200px;
+}
+
+}
+
+@media(max-width:600px){
+
+.container{
+    padding-top:100px;
+}
+
+.back-btn{
+    left:20px;
+    top:20px;
+}
+
+h1{
+    font-size:34px;
+}
+
+.step h2{
+    font-size:24px;
+}
+
+.step .number{
+    font-size:34px;
+}
+
+}
+

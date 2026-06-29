@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cause:wght@100..900&family=Playpen+Sans+Hebrew:wght@100..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  
+</head>
+<body>
+  
+  <div class="hero-layout">
+     <video class="bg-video" autoplay muted loop playsinline>
+    <source src="videos/7122120-uhd_3840_2160_30fps.mp4" type="video/mp4">
+</video>  
+    
+    <!-- Top Center Brand -->
+    <div class="brand-top" id="anim-brand">Resum<span>ATE</span></div>
+    
+
+    <!-- Corners -->
+    <div class="corner-element top-left anim-corner">
+      Every career starts with one page<br> start yours with resumate.
+    </div>
+    
+    <div class="corner-element top-right anim-corner">
+      <div class="hamburger" id="anim-hamburger">
+      <span></span><span></span> <span></span>
+    </div>
+      <div class="menu" id="menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="how-it-works.html">How it works</a>
+      </div>
+    </div>
+    
+    <div class="corner-element bottom-left anim-corner">
+    <a href="https://github.com/dollyymishraa" target="_blank">
+        <i class="fa-brands fa-github"></i>
+    </a>
+
+    <a href="https://linkedin.com/in/dolly-mishra-0107823a9" target="_blank">
+        <i class="fa-brands fa-linkedin"></i>
+    </a>
+
+    <a href="https://instagram.com/dollyymishra" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+</div>
+    
+    <div class="corner-element bottom-right anim-corner">
+      &copy; 2026 resumate by dolly
+    </div>
+
+    <!-- Left Content -->
+    <div class="hero-left">
+      <div class="hero-subtitle" id="anim-left-1">Your next opportunity starts here</div>
+      <h1 class="hero-title" id="anim-left-2">Start creating<br>your resume</h1>
+      <a href="signup.html" class="hero-btn" id="anim-left-3">
+        Create resume 
+        <span style="display:inline-block; background:#555; border-radius:50%; width:20px; height:20px; line-height:20px; text-align:center; font-size:10px;">➔</span>
+      </a>
+    </div>
+
+     <!-- Right Content: Coverflow Carousel -->
+    <div class="hero-right">
+      <div class="carousel-container" id="anim-right-1">
+        <div class="carousel-item"><a id="T1" href="builder.html?template=modern">
+         <img src="images/-template-dark-blue.jpg"
+         alt="template1"
+         >
+        </a></div>
+        <div class="carousel-item"><a id="T2" href="builder.html?template=minimal">
+         <img src="images/5th.jpg"
+         alt="template2"
+         >
+        </a></div>
+        <div class="carousel-item active"><a id="T3" href="builder.html?template=creative">
+         <img src="images/creative_resume_template_thumbnail.png"
+         alt="template3"
+         >
+        </a></div>
+        <div class="carousel-item"><a id="T4" href="builder.html?template=classic">
+         <img src="images/Management-Entry-Level-1.pdf.jpeg"
+         alt="template4"
+        >
+        </a></div>
+        <div class="carousel-item"><a id="T5" href="builder.html?template=professional">
+         <img src="images/Professional CV Resume.jpg"
+         alt="template5"
+        >
+        </a></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sequence the animations
+      setTimeout(() => {
+        document.getElementById('anim-brand').classList.add('anim-brand');
+      }, 2100);
+
+      setTimeout(() => {
+        document.querySelectorAll('.anim-corner').forEach(el => el.classList.add('anim-corners'));
+      }, 2500);
+
+      setTimeout(() => {
+        document.getElementById('anim-left-1').classList.add('anim-left-1');
+        document.getElementById('anim-left-2').classList.add('anim-left-2');
+      }, 2900);
+
+      setTimeout(() => {
+        document.getElementById('anim-left-3').classList.add('anim-left-2');
+      }, 3200);
+
+      setTimeout(() => {
+        document.getElementById('anim-right-1').classList.add('anim-right');
+      }, 3600);
+    });
+  </script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

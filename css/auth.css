@@ -1,0 +1,125 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background blob */
+.auth-bg-blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: pulse 10s infinite alternate;
+}
+
+[data-theme="light"] .auth-bg-blob {
+  background: radial-gradient(circle, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 70%);
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  padding: var(--spacing-xl);
+  z-index: 1;
+  position: relative;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.auth-title {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.04em;
+}
+
+.auth-subtitle {
+  color: var(--text-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-sm);
+  font-size: 0.9rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+.auth-btn {
+  margin-top: var(--spacing-md);
+  width: 100%;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-link {
+  color: var(--accent-color);
+  font-weight: 500;
+  transition: opacity var(--transition-fast);
+}
+
+.auth-link:hover {
+  opacity: 0.8;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.error-message.visible {
+  display: block;
+}

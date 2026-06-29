@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <button class="btn btn-secondary logout-btn" onclick="Auth.logout()">Logout</button>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header slide-up">
+      <h1 class="dashboard-title">Welcome back, <span id="userName"></span></h1>
+      <p class="dashboard-subtitle">Continue building your career story.</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-card glass slide-up delay-100" onclick="window.location.href='builder.html'">
+        <div>
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </div>
+          <h3 class="card-title">Create New Resume</h3>
+          <p class="card-description">Start from scratch with our guided wizard.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-card glass slide-up delay-200" onclick="window.location.href='profile.html'">
+        <div>
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <h3 class="card-title">Profile</h3>
+          <p class="card-description">Manage your account and preferences.</p>
+        </div>
+      </div>
+
+      <div class="dashboard-card glass slide-up delay-300" onclick="window.location.href='settings.html'">
+        <div>
+          <div class="card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v6m-9-9h6m6 0h6"></path></svg>
+          </div>
+          <h3 class="card-title">Settings</h3>
+          <p class="card-description">Customize your experience.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-up delay-300">
+      <h2 style="margin-bottom: var(--spacing-lg);">Recent Resumes</h2>
+      <input type="text" id="searchBar" class="search-bar" placeholder="Search resumes...">
+      <div class="resume-list" id="resumeList">
+        <!-- Resumes will be dynamically loaded here -->
+      </div>
+      <div id="emptyState" style="display: none; text-align: center; padding: var(--spacing-xxl); color: var(--text-muted);">
+        <p>No resumes yet. Create your first one!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/resume.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.requireAuth();
+      
+      const user = Auth.getCurrentUser();
+      document.getElementById('userName').textContent = user.name;
+
+      // Reveal animations
+      setTimeout(() => {
+        document.querySelectorAll('.slide-up').forEach(el => el.classList.add('visible'));
+      }, 100);
+
+      loadResumes();
+
+      // Search functionality
+      document.getElementById('searchBar').addEventListener('input', (e) => {
+        loadResumes(e.target.value);
+      });
+    });
+
+    function loadResumes(searchTerm = '') {
+      const resumes = ResumeManager.getAll();
+      const filtered = searchTerm 
+        ? resumes.filter(r => r.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : resumes;
+
+      const container = document.getElementById('resumeList');
+      const emptyState = document.getElementById('emptyState');
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      container.innerHTML = filtered.map(resume => `
+        <div class="resume-item glass">
+          <div class="resume-thumbnail"></div>
+          <div class="resume-name">${resume.name}</div>
+          <div class="resume-meta">Last modified: ${new Date(resume.lastModified).toLocaleDateString()}</div>
+          <div class="resume-actions">
+            <button onclick="editResume('${resume.id}')">Edit</button>
+            <button onclick="duplicateResume('${resume.id}')">Duplicate</button>
+            <button onclick="deleteResume('${resume.id}')">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function editResume(id) {
+      window.location.href = `builder.html?id=${id}`;
+    }
+
+    function duplicateResume(id) {
+      ResumeManager.duplicate(id);
+      Toast.show('Resume duplicated successfully', 'success');
+      loadResumes();
+    }
+
+    function deleteResume(id) {
+      if (confirm('Are you sure you want to delete this resume? This action cannot be undone.')) {
+        ResumeManager.delete(id);
+        Toast.show('Resume deleted successfully', 'success');
+        loadResumes();
+      }
+    }
+  </script>
+</body>
+</html>

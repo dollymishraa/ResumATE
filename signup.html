@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-bg-blob"></div>
+    <div class="auth-card glass scale-up">
+      <div class="auth-header">
+        <h1 class="auth-title">Join Resumate.</h1>
+        <p class="auth-subtitle">Design your career beautifully.</p>
+      </div>
+      
+      <form id="signupForm" class="auth-form">
+        <div class="form-group delay-100 slide-up">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" id="name" required placeholder="John Doe">
+        </div>
+
+        <div class="form-group delay-100 slide-up">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" required placeholder="you@example.com">
+          <span class="error-message" id="emailError">Please enter a valid email address.</span>
+        </div>
+        
+        <div class="form-group delay-200 slide-up">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" required placeholder="••••••••" minlength="6">
+        </div>
+
+        <div class="form-group delay-200 slide-up">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" required placeholder="••••••••" minlength="6">
+          <span class="error-message" id="passwordError">Passwords do not match.</span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary auth-btn delay-300 slide-up">Sign Up</button>
+      </form>
+      
+      <div class="auth-footer delay-300 slide-up">
+        Already have an account? <a href="login.html" class="auth-link">Log in</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.redirectIfAuth();
+      
+      // Reveal animations
+      setTimeout(() => {
+        document.querySelector('.scale-up').classList.add('visible');
+        document.querySelectorAll('.slide-up').forEach(el => el.classList.add('visible'));
+      }, 100);
+
+      const form = document.getElementById('signupForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        let isValid = true;
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          emailError.classList.add('visible');
+          isValid = false;
+        } else {
+          emailError.classList.remove('visible');
+        }
+
+        if (password !== confirmPassword) {
+          passwordError.classList.add('visible');
+          isValid = false;
+        } else {
+          passwordError.classList.remove('visible');
+        }
+
+        if (!isValid) return;
+
+        try {
+          Auth.signup(name, email, password);
+          window.location.href = 'dashboard.html';
+        } catch (error) {
+          Toast.show(error.message, 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

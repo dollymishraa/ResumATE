@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <button class="btn btn-secondary logout-btn" onclick="window.location.href='dashboard.html'">← Back</button>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header slide-up">
+      <h1 class="dashboard-title">Settings</h1>
+      <p class="dashboard-subtitle">Customize your experience.</p>
+    </div>
+
+    <div class="glass slide-up delay-100" style="max-width: 600px; padding: var(--spacing-xl); margin-bottom: var(--spacing-lg);">
+      <h3 style="margin-bottom: var(--spacing-lg);">Theme</h3>
+      <div style="display: flex; gap: var(--spacing-md); align-items: center;">
+        <span>Dark Mode</span>
+        <label style="position: relative; display: inline-block; width: 60px; height: 30px;">
+          <input type="checkbox" id="themeToggle" style="opacity: 0; width: 0; height: 0;">
+          <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--surface-color); transition: 0.4s; border-radius: 30px; border: 1px solid var(--border-color);"></span>
+          <span style="position: absolute; content: ''; height: 22px; width: 22px; left: 4px; bottom: 3px; background-color: var(--accent-color); transition: 0.4s; border-radius: 50%;"></span>
+        </label>
+        <span>Light Mode</span>
+      </div>
+    </div>
+
+    <div class="glass slide-up delay-200" style="max-width: 600px; padding: var(--spacing-xl); margin-bottom: var(--spacing-lg);">
+      <h3 style="margin-bottom: var(--spacing-lg);">Data Management</h3>
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+        <button class="btn btn-secondary" onclick="exportData()">Export All Data</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">Import Data</button>
+        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+        <button class="btn btn-secondary" onclick="resetPreferences()">Reset All Preferences</button>
+      </div>
+    </div>
+
+    <div class="glass slide-up delay-300" style="max-width: 600px; padding: var(--spacing-xl);">
+      <h3 style="margin-bottom: var(--spacing-lg);">Account</h3>
+      <button class="btn btn-primary" onclick="Auth.logout()">Logout</button>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/resume.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.requireAuth();
+
+      const settings = Storage.get('resumate_settings', { theme: 'dark' });
+      const toggle = document.getElementById('themeToggle');
+      toggle.checked = settings.theme === 'light';
+
+      toggle.addEventListener('change', () => {
+        Theme.toggle();
+      });
+
+      setTimeout(() => {
+        document.querySelectorAll('.slide-up').forEach(el => el.classList.add('visible'));
+      }, 100);
+    });
+
+    function exportData() {
+      const resumes = ResumeManager.getAll();
+      const dataStr = JSON.stringify(resumes, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `resumate-export-${Date.now()}.json`;
+      link.click();
+      Toast.show('Data exported successfully', 'success');
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data)) throw new Error('Invalid format');
+          
+          const user = Auth.getCurrentUser();
+          const allResumes = Storage.get(ResumeManager.RESUMES_KEY, {});
+          allResumes[user.id] = data;
+          Storage.set(ResumeManager.RESUMES_KEY, allResumes);
+          
+          Toast.show('Data imported successfully', 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 1500);
+        } catch (error) {
+          Toast.show('Invalid file format. Please upload a valid JSON file.', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetPreferences() {
+      if (confirm('Are you sure? This will reset all settings to defaults.')) {
+        Storage.remove('resumate_settings');
+        Toast.show('Preferences reset successfully', 'success');
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResumATE</title>
+  <link rel="icon" type="image/png" href="images/2026-06-27.png">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  
+
+
+  <div class="auth-container">
+    <div class="auth-bg-blob"></div>
+    <div class="auth-card glass scale-up">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <div class="hero-layout">RESUM<span>ATE</span>
+</div>
+        <h1 class="auth-title">Welcome back.</h1>
+        <p class="auth-subtitle">Log in to continue building your career.</p>
+      </div>
+      
+      <form id="loginForm" class="auth-form">
+        <div class="form-group delay-100 slide-up">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" required placeholder="you@example.com">
+          <span class="error-message" id="emailError">Please enter a valid email address.</span>
+        </div>
+        
+        <div class="form-group delay-200 slide-up">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" required placeholder="••••••••">
+        </div>
+        
+        <div class="form-options delay-300 slide-up">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember">
+            <span>Remember me</span>
+          </label>
+          <a href="forgot-password.html" class="auth-link">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="btn btn-primary auth-btn delay-300 slide-up">Log In</button>
+      </form>
+      
+      <div class="auth-footer delay-300 slide-up">
+        Don't have an account? <a href="signup.html" class="auth-link">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/theme.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.redirectIfAuth();
+      
+      // Reveal animations
+      setTimeout(() => {
+        document.querySelector('.scale-up').classList.add('visible');
+        document.querySelectorAll('.slide-up').forEach(el => el.classList.add('visible'));
+      }, 100);
+
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const remember = document.getElementById('remember').checked;
+        const emailError = document.getElementById('emailError');
+        
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          emailError.classList.add('visible');
+          return;
+        } else {
+          emailError.classList.remove('visible');
+        }
+
+        try {
+          Auth.login(email, password, remember);
+          window.location.href = 'dashboard.html';
+        } catch (error) {
+          Toast.show(error.message, 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
