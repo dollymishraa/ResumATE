@@ -1,19 +1,16 @@
+
+
+/* ── Landing page (index.html) ── */
+
 @media (max-width: 768px) {
+
+  /* Stack hero vertically, fit content — no gap */
   .hero-layout {
     flex-direction: column;
     height: auto;
     min-height: 100vh;
-    
     overflow-y: auto;
     overflow-x: hidden;
-  }
-.bg-video::-webkit-media-controls {
-  display: none !important;
-}
-
-  .bg-video {
-    position: fixed;
-    
   }
 
   /* Hide the top-left tagline on mobile — it overlaps the brand */
@@ -25,6 +22,7 @@
   .brand-top {
     font-size: 20px;
     top: 16px;
+    /* stays centered via existing left:50% / translateX(-50%) */
   }
 
   .top-right {
@@ -89,7 +87,6 @@
     padding: 16px 24px;
     gap: 10px;
     justify-content: center;
-    opacity: 1;
   }
 
   .carousel-item img {
@@ -130,22 +127,6 @@
   .carousel-item.active {
     width: 78px;
     height: 108px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 28px;
-  }
-
-  .carousel-item img {
-    width: 60px;
-    height: 86px;
-  }
-
-  .carousel-item.active {
-    width: 80px;
-    height: 110px;
   }
 }
 
@@ -234,18 +215,65 @@
 
 @media (max-width: 600px) {
 
+  /* Whole page fits in one screen — no scrolling */
+  .auth-container {
+    min-height: 100vh;
+    padding: 16px;
+    align-items: center;
+  }
+
   .auth-card {
-    padding: var(--spacing-lg);
+    padding: 24px 20px;
+  }
+
+  /* The logo div in login.html uses hero-layout class — reset it on mobile */
+  .auth-card .hero-layout {
+    position: static;
+    width: auto;
+    height: auto;
+    display: inline;
+    background: none;
+    overflow: visible;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .auth-header {
+    margin-bottom: 16px;
+  }
+
+  .auth-logo {
+    margin-bottom: 8px;
   }
 
   .auth-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+
+  .auth-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .auth-form {
+    gap: 10px;
   }
 
   .form-options {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-sm);
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .auth-btn {
+    margin-top: 8px;
+  }
+
+  .auth-footer {
+    margin-top: 16px;
+    font-size: 0.85rem;
   }
 }
 
