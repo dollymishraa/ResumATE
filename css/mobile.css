@@ -3,12 +3,17 @@
     flex-direction: column;
     height: auto;
     min-height: 100vh;
+    
     overflow-y: auto;
     overflow-x: hidden;
   }
+.bg-video::-webkit-media-controls {
+  display: none !important;
+}
 
   .bg-video {
     position: fixed;
+    
   }
 
   /* Hide the top-left tagline on mobile — it overlaps the brand */
