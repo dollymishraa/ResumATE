@@ -46,7 +46,7 @@
       </form>
       
       <div class="auth-footer delay-300 slide-up">
-        Already have an account? <a href="login.html" class="auth-link">Log in</a>
+        Already have an account? <a id="loginLink" href="login.html" class="auth-link">Log in</a>
       </div>
     </div>
   </div>
@@ -58,6 +58,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       Auth.redirectIfAuth();
+
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get('redirect');
+      if (redirect) {
+        document.getElementById('loginLink').href = 'login.html?redirect=' + encodeURIComponent(redirect);
+      }
       
       // Reveal animations
       setTimeout(() => {
@@ -97,7 +103,9 @@
 
         try {
           Auth.signup(name, email, password);
-          window.location.href = 'dashboard.html';
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          window.location.href = redirect ? decodeURIComponent(redirect) : 'dashboard.html';
         } catch (error) {
           Toast.show(error.message, 'error');
         }

@@ -103,6 +103,8 @@
 
   </div>
 
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
   <script>
     
     document.addEventListener('DOMContentLoaded', () => {
@@ -127,6 +129,20 @@
       setTimeout(() => {
         document.getElementById('anim-right-1').classList.add('anim-right');
       }, 3600);
+
+      // Auth gate: intercept all template links in the carousel
+      document.querySelectorAll('.carousel-item a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const destination = this.getAttribute('href');
+          if (Auth.getCurrentUser()) {
+            window.location.href = destination;
+          } else {
+            const encoded = encodeURIComponent(destination);
+            window.location.href = 'login.html?redirect=' + encoded;
+          }
+        });
+      });
     });
   </script>
   <script src="js/landing.js"></script>
