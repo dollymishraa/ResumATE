@@ -1,16 +1,14 @@
-
-
-  /* ── Landing page (index.html) ── */
-
 @media (max-width: 768px) {
-
-  /* Stack hero vertically, fit content — no gap */
   .hero-layout {
     flex-direction: column;
     height: auto;
     min-height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .bg-video {
+    position: fixed;
   }
 
   /* Hide the top-left tagline on mobile — it overlaps the brand */
