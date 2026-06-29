@@ -1,0 +1,357 @@
+
+/* ── Landing page (index.html) ── */
+
+@media (max-width: 768px) {
+
+  /* Stack hero vertically */
+  .hero-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Brand centered smaller */
+  .brand-top {
+    font-size: 20px;
+    top: 20px;
+  }
+
+  /* Hide desktop corner text, show hamburger still */
+  .top-left {
+    top: 20px;
+    left: 16px;
+    font-size: 10px;
+  }
+
+  .top-right {
+    top: 18px;
+    right: 16px;
+  }
+
+  .bottom-left {
+    bottom: 20px;
+    left: 16px;
+    gap: 14px;
+  }
+
+  .bottom-left a {
+    font-size: 16px;
+  }
+
+  .bottom-right {
+    bottom: 20px;
+    right: 16px;
+    font-size: 10px;
+  }
+
+  /* Left hero content: centered */
+  .hero-left {
+    flex: none;
+    padding: 120px 24px 32px;
+    align-items: center;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle {
+    width: auto;
+    white-space: normal;
+    height: auto;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .hero-btn {
+    font-size: 13px;
+    padding: 10px 20px;
+  }
+
+  /* Right hero: carousel centered */
+  .hero-right {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 80px;
+    z-index: 5;
+  }
+
+  .carousel-container {
+    right: 0;
+    padding: 20px 24px;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .carousel-item img {
+    width: 80px;
+    height: 114px;
+  }
+
+  .carousel-item.active {
+    width: 100px;
+    height: 140px;
+  }
+
+  /* Dropdown menu */
+  .menu {
+    right: 0;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .carousel-item img {
+    width: 60px;
+    height: 86px;
+  }
+
+  .carousel-item.active {
+    width: 80px;
+    height: 110px;
+  }
+}
+
+
+/* ── Builder page (builder.html) ── */
+
+@media (max-width: 900px) {
+
+  /* Section header padding */
+  .section-header {
+    padding: 32px 16px 0;
+  }
+
+  #editorSection {
+    padding: 0 16px 48px;
+  }
+
+  /* Stack form + preview vertically */
+  .editor-wrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Form panel: uncap height on mobile, natural scroll */
+  .form-panel {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* Preview panel: keep a reasonable height */
+  .preview-area {
+    min-height: 320px;
+    max-height: 480px;
+  }
+
+  /* Template strip: 3 across on tablet */
+  .template-strip {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .tmpl-thumb {
+    height: 180px;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  /* Buttons: full width stack */
+  .btn-row {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+    padding: 10px 18px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Template strip: 2 across on phones */
+  .template-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tmpl-thumb {
+    height: 150px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .section-sub {
+    font-size: 12px;
+  }
+}
+
+
+/* ── Auth pages (login, signup, forgot-password) ── */
+
+@media (max-width: 600px) {
+
+  .auth-card {
+    padding: var(--spacing-lg);
+  }
+
+  .auth-title {
+    font-size: 2rem;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+}
+
+
+/* ── Dashboard page ── */
+
+@media (max-width: 600px) {
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-list {
+    grid-template-columns: 1fr;
+  }
+
+  .logout-btn {
+    top: 12px;
+    right: 12px;
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .resume-actions {
+    flex-wrap: wrap;
+  }
+
+  .resume-actions button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+
+/* ── About page (about.html) ── */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding: 100px 24px 48px;
+  }
+
+  .back-btn {
+    top: 20px;
+    left: 16px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .intro {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .cards {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+  }
+}
+
+
+/* ── Contact page (contact.html) ── */
+/* .contact-grid already has 1-col at 768px — this just tightens spacing */
+
+@media (max-width: 480px) {
+
+  .contact-grid {
+    gap: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+  }
+}
+
+
+/* ── How It Works page (how-it-works.html) ── */
+/* .steps already collapses to 1-col at 900px via existing CSS */
+
+@media (max-width: 480px) {
+
+  .step img {
+    height: 180px;
+  }
+
+  .step .number {
+    font-size: 28px;
+    margin: 18px 18px 8px;
+  }
+
+  .step h2 {
+    font-size: 20px;
+    margin: 0 18px 10px;
+  }
+
+  .step p {
+    font-size: 14px;
+    margin: 0 18px 20px;
+  }
+}
+
+
+/* ── Global nav (used across pages via global.css) ── */
+
+@media (max-width: 768px) {
+
+  .mobile-menu-btn {
+    display: block;
+  }
+}
+
+
+/* ── Profile & Settings pages ── */
+
+@media (max-width: 768px) {
+
+  /* These pages share dashboard-container padding */
+  .dashboard-container {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+}

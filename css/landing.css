@@ -147,46 +147,9 @@ font-weight: 800;
     color: #ffffff;
     transform: translateY(-3px);
 }
-.hero-right{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
 
-.carousel-container{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:30px;
-    padding: 60px 120px;
-    overflow: visible;
-}
 
-.carousel-item{
-    transition:.5s ease;
-    opacity:0.5;
-    transform:scale(0.75);
-    cursor:pointer;
-    position: relative;
-    z-index: 1;
-    flex-shrink: 0;
-}
 
-.carousel-item.active{
-    transform:scale(1.13);
-    opacity:1;
-    z-index:10;
-}
-
-.carousel-item img{
-  
-    width:150px;
-    object-fit:fill;
-    height:190px;
-    border-radius:00px;
-    display:block;
-    box-shadow:0 15px 30px rgba(0,0,0,.18);
-}
 .bottom-right {
   bottom: 40px;
   right: 40px;
@@ -261,42 +224,52 @@ font-weight: 800;
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 5;
 }
 
 /* Coverflow Carousel */
+
+.carousel-item{
+    transition:.5s ease;
+    opacity:0.5;
+    transform:scale(0.75);
+    cursor:pointer;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.carousel-item.active{
+    transform:scale(1.13);
+    opacity:1;
+    z-index:10;
+}
+
+
 .carousel-container {
   display: flex;
   align-items: center;
+  justify-self: center;
   gap: 0px;
   opacity: 0;
+  padding: 10px 30px;
   position: relative;
+  overflow: visible;
   right: -50px;
 }
 
-.carousel-item img{
-  width: 100%;
-  height: 100;
-  object-fit: cover;
-  display: block;
-}
 
 .carousel-item img{
-    width:120px;
-    height:170px;
-    object-fit:cover;
-    border-radius:16px;
+    width:100px;
+    object-fit:fill;
+    height:120px;
+    border-radius:2px;
+    display:block;
+    box-shadow:0 15px 30px rgba(0,0,0,.18);
 }
 
-.carousel-item.active {
-  width: 140px;
-  height: 190px;
-  background: #eaeaea;
-  transform: scale(1.0);
-  z-index: 1;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
 
 /* Animations */
 @keyframes slideInDown {
